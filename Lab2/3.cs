@@ -17,10 +17,10 @@ namespace ConsoleApp7
 		}
 		public static void Folders(DirectoryInfo dir, int x)
 		{ 
-			foreach(FileInfo files in dir.GetFiles()) // пробегаемся по всем файлам в указанной Directory 
+			foreach(FileInfo f in dir.GetFiles()) // пробегаемся по всем файлам в указанной Directory 
 			{
-				Probels(x); // вызываем функцию пробелов
-				Console.WriteLine(files.Name); // и выводим имя файла
+				Probels(x); // вызываем функцию пробелов 2
+				Console.WriteLine(f.Name); // и выводим имя файла
 			}
 			foreach(DirectoryInfo d in dir.GetDirectories()) // пробегаемся по всем папкам в указанной Directory
 			{
@@ -31,7 +31,7 @@ namespace ConsoleApp7
 		}
 		static void Main(string[] args)
 		{
-			DirectoryInfo d = new DirectoryInfo("/Users/User/Desktop/Damn/C++"); // путь файла 
+			DirectoryInfo d = new DirectoryInfo("/Users/User/Desktop/Damn/C++"); // путь к папке 1
 
 			Folders(d,0); // вызываем функцию..рекурсию
 		}
