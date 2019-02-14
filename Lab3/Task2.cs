@@ -7,26 +7,26 @@ using System.IO;
 
 namespace Lab3
 {
-	class FarManager 
+	class FarManager
 	{
-		int cursor; 
-		int cnt; 
-		public FarManager() 
+		int cursor;
+		int cnt;
+		public FarManager()
 		{
-			cursor = 0; 
+			cursor = 0;
 		}
-		public void Show(DirectoryInfo dire, int z) 
+		public void Show(DirectoryInfo dire, int z)
 		{
-			FileSystemInfo[] d = dire.GetFileSystemInfos(); 
-			for (int i = 0; i < d.Length; i++) 
+			FileSystemInfo[] d = dire.GetFileSystemInfos();
+			for (int i = 0; i < d.Length; i++)
 			{
-				if (z == i) 
+				if (z == i)
 				{
-					Console.ForegroundColor = ConsoleColor.White; 
+					Console.ForegroundColor = ConsoleColor.White;
 					Console.BackgroundColor = ConsoleColor.Red;
-					Console.WriteLine(i + 1 + ". " + d[i].Name); 
+					Console.WriteLine(i + 1 + ". " + d[i].Name);
 				}
-				else if (d[i].GetType() == typeof(FileInfo)) 
+				else if (d[i].GetType() == typeof(FileInfo))
 				{
 					Console.ForegroundColor = ConsoleColor.Yellow;
 					Console.BackgroundColor = ConsoleColor.Black;
@@ -68,17 +68,17 @@ namespace Lab3
 				button = Console.ReadKey();
 				Console.BackgroundColor = ConsoleColor.Black;
 				Console.Clear();
-				if (button.Key == ConsoleKey.F2)
+				if (button.Key == ConsoleKey.F2) //F2 нужна что бы переименовать имя 
 				{
-					if (d[cursor].GetType() == typeof(FileInfo))
+					if (d[cursor].GetType() == typeof(FileInfo))//переименовать имя файла
 					{
-						string s = Console.ReadLine();
-						string s1 = Path.Combine(dir.FullName, s);
-						File.Move(d[cursor].FullName, s1);
-						Console.BackgroundColor = ConsoleColor.Black;
+						string s = Console.ReadLine();//вводим имя
+						string s1 = Path.Combine(dir.FullName, s); // комбинируем это имя с путем
+						File.Move(d[cursor].FullName, s1); // переименуем
+						Console.BackgroundColor = ConsoleColor.Black; //нужно для того что бы мы сразу видели изменения
 						Console.Clear();
 					}
-					if(d[cursor].GetType() == typeof(DirectoryInfo))
+					if (d[cursor].GetType() == typeof(DirectoryInfo))//для папки
 					{
 						string s = Console.ReadLine();
 						string s1 = Path.Combine(dir.FullName, s);
@@ -87,23 +87,23 @@ namespace Lab3
 						Console.Clear();
 					}
 				}
-				if(button.Key == ConsoleKey.Delete)
+				if (button.Key == ConsoleKey.Delete) //кнопка del что бы удалить
 				{
-					if (d[cursor].GetType() == typeof(FileInfo))
+					if (d[cursor].GetType() == typeof(FileInfo))//удаление файла
 					{
 						File.Delete(d[cursor].FullName);
 					}
-					if (d[cursor].GetType() == typeof(DirectoryInfo))
+					if (d[cursor].GetType() == typeof(DirectoryInfo)) // для папки
 					{
 						DirectoryInfo ddd = new DirectoryInfo(d[cursor].FullName);
-						FileSystemInfo[] dd = ddd.GetFileSystemInfos();
-						if(dd.Length == 0)
+						FileSystemInfo[] dd = ddd.GetFileSystemInfos(); // проверяем есть ли внутри этой папки есть какие нибудь файлы
+						if (dd.Length == 0) // если нет то удаляем данную папку
 						{
 							Directory.Delete(d[cursor].FullName);
 						}
 						else
 						{
-							Console.WriteLine("This folder not empty, so it can't be deleted");
+							Console.WriteLine("This folder not empty, so it can't be deleted"); // иначе говорим что эта папка не пуста
 						}
 
 					}
@@ -118,12 +118,12 @@ namespace Lab3
 				}
 				if (button.Key == ConsoleKey.Enter)
 				{
-					if (d[cursor].GetType() == typeof(FileInfo))
+					if (d[cursor].GetType() == typeof(FileInfo)) // для того что бы открыть текстовые файлы
 					{
 						StreamReader sr = File.OpenText(d[cursor].FullName);
-						string s = sr.ReadToEnd();
-						sr.Close();
-						Console.WriteLine(s);
+						string s = sr.ReadToEnd(); // сохраняем все что есть в текстовом файле в строку
+						sr.Close();//закрываем
+						Console.WriteLine(s);// и выводим на экран
 					}
 					if (d[cursor].GetType() == typeof(DirectoryInfo))
 					{
